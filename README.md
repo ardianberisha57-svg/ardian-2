@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>SanierungsHeld – Sanierung ganz einfach</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --primary: #0057b8;
+      --secondary: #ffcc00;
+      --light: #f5f7fa;
+      --dark: #222;
+    }
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, sans-serif;
+    }
+    body {
+      margin: 0;
+      background: var(--light);
+      color: var(--dark);
+      line-height: 1.5;
+    }
+    header {
+      background: var(--primary);
+      color: #fff;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.4rem;
+    }
+    .badge {
+      background: var(--secondary);
+      color: var(--dark);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: bold;
+    }
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    section {
+      background: #fff;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+    h2 {
+      margin-top: 0;
+      color: var(--primary);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .card.selected {
+      border-color: var(--primary);
+      background: #e6f0ff;
+    }
+    .card img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+    }
+    label {
+      display: block;
+      margin: 0.75rem 0 0.25rem;
+      font-weight: 600;
+    }
+    input[type="number"],
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .inline {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .price-output {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin: 1rem 0;
+    }
+    .hidden {
+      display: none;
+    }
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.35rem;
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .calendar div {
+      padding: 0.5rem 0.25rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+    .calendar .free {
+      background: #d1f5d1;
+      cursor: pointer;
+    }
+    .calendar .taken {
+      background: #ffecec;
+      cursor: not-allowed;
+    }
+    .calendar .selected-day {
+      background: var(--secondary);
+      font-weight: bold;
+    }
+    button {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 1rem;
+    }
+    button:hover {
+      background: #0042a0;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.8rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🛠️ SanierungsHeld</h1>
+    <div class="badge">Beta</div>
+  </header>
+
+  <main>
+    <!-- 1. Gewerk wählen -->
+    <section id="step1">
+      <h2>1. Gewerk wählen</h2>
+      <div class="grid">
+        <div class="card" data-trade="maler" data-price="25">
+          <img src="https://cdn-icons-png.flaticon.com/512/2895/2895455.png" alt="Maler">
+          <div>Maler</div>
+        </div>
+        <div class="card" data-trade="gipser" data-price="30">
+          <img src="https://cdn-icons-png.flaticon.com/512/2895/2895434.png" alt="Gipser">
+          <div>Gipser</div>
+        </div>
+        <div class="card" data-trade="elektriker" data-price="45">
+          <img src="https://cdn-icons-png.flaticon.com/512/2895/2895416.png" alt="Elektriker">
+          <div>Elektriker</div>
+        </div>
+        <div class="card" data-trade="sanitaer" data-price="50">
+          <img src="https://cdn-icons-png.flaticon.com/512/2895/2895444.png" alt="Sanitär">
+          <div>Sanitär</div>
+        </div>
+        <div class="card" data-trade="bodenleger" data-price="35">
+          <img src="https://cdn-icons-png.flaticon.com/512/2895/2895459.png" alt="Bodenleger">
+          <div>Bodenleger</div>
+        </div>
+        <div class="card" data-trade="fliesenleger" data-price="40">
+          <img src="https://cdn-icons-png.flaticon.com/512/2895/2895467.png" alt="Fliesenleger">
+          <div>Fliesenleger</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Fläche & Preismodell -->
+    <section id="step2" class="hidden">
+      <h2>2. Fläche & Preismodell</h2>
+      <label>Fläche in m²</label>
+      <input type="number" id="area" min="1" step="0.1" placeholder="z. B. 35">
+      <div class="inline">
+        <label><input type="radio" name="pricing" value="fix" checked> Fixpreis (pro m²)</label>
+        <label><input type="radio" name="pricing" value="flex"> Preis nach Aufwand</label>
+      </div>
+      <div id="fixPrice" class="price-output">€ 0,00</div>
+      <div id="flexHint" class="hidden">Handwerker erstellt Ihnen ein individuelles Angebot nach Besichtigung.</div>
+    </section>
+
+    <!-- 3. Verfügbarkeit -->
+    <section id="step3" class="hidden">
+      <h2>3. Wunschtermin</h2>
+      <label>Kalender <span id="tradeName"></span></label>
+      <div class="calendar" id="calendar"></div>
+    </section>
+
+    <!-- 4. Buchung -->
+    <section id="step4" class="hidden">
+      <h2>4. Direkt buchen</h2>
+      <form id="bookingForm">
+        <label>Name</label>
+        <input type="text" name="name" required>
+        <label>E-Mail</label>
+        <input type="email" name="email" required>
+        <label>Telefon</label>
+        <input type="tel" name="phone" required>
+        <label>Adresse (Straße, PLZ Ort)</label>
+        <input type="text" name="address" required>
+        <label>Notiz (optional)</label>
+        <input type="text" name="note" placeholder="z. B. Stockwerk, Zugang, ...">
+        <button type="submit">Kostenpflichtig buchen</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> SanierungsHeld – Alle Angaben ohne Gewähr.
+  </footer>
+
+  <script>
+    // Globale Variablen
+    const cards = document.querySelectorAll('.card');
+    const step2 = document.getElementById('step2');
+    const step3 = document.getElementById('step3');
+    const step4 = document.getElementById('step4');
+    const areaInput = document.getElementById('area');
+    const fixOutput = document.getElementById('fixPrice');
+    const flexHint = document.getElementById('flexHint');
+    const pricingRadios = document.querySelectorAll('input[name="pricing"]');
+    const calendar = document.getElementById('calendar');
+    const tradeNameSpan = document.getElementById('tradeName');
+    const bookingForm = document.getElementById('bookingForm');
+
+    let selectedTrade = '';
+    let selectedPricePerM2 = 0;
+    let selectedDay = '';
+
+    // 1) Gewerk-Auswahl
+    cards.forEach(c => c.addEventListener('click', () => {
+      cards.forEach(x => x.classList.remove('selected'));
+      c.classList.add('selected');
+      selectedTrade = c.dataset.trade;
+      selectedPricePerM2 = +c.dataset.price;
+      step2.classList.remove('hidden');
+      step3.classList.add('hidden');
+      step4.classList.add('hidden');
+      areaInput.value = '';
+      fixOutput.textContent = '€ 0,00';
+      document.body.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }));
+
+    // 2) Fläche & Preis
+    function calc() {
+      const area = parseFloat(areaInput.value) || 0;
+      const isFix = document.querySelector('input[name="pricing"]:checked').value === 'fix';
+      if (isFix) {
+        fixOutput.textContent = `€ ${(area * selectedPricePerM2).toFixed(2)}`;
+        flexHint.classList.add('hidden');
+        fixOutput.classList.remove('hidden');
+      } else {
+        fixOutput.classList.add('hidden');
+        flexHint.classList.remove('hidden');
+      }
+      if (area > 0) {
+        step3.classList.remove('hidden');
+        renderCalendar();
+      } else {
+        step3.classList.add('hidden');
+        step4.classList.add('hidden');
+      }
+    }
+    areaInput.addEventListener('input', calc);
+    pricingRadios.forEach(r => r.addEventListener('change', calc));
+
+    // 3) Kalender (Mock)
+    function renderCalendar() {
+      tradeNameSpan.textContent = `(${selectedTrade})`;
+      calendar.innerHTML = '';
+      const today = new Date();
+      for (let d = 0; d < 21; d++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() + d);
+        const day = date.getDate();
+        const month = date.toLocaleDateString('de', { month: 'short' });
+        const iso = date.toISOString().split('T')[0];
+        const free = Math.random() > 0.4; // zufällig belegt
+        const cell = document.createElement('div');
+        cell.textContent = `${day}. ${month}`;
+        cell.classList.add(free ? 'free' : 'taken');
+        if (free) {
+          cell.addEventListener('click', () => {
+            document.querySelectorAll('.calendar div').forEach(x => x.classList.remove('selected-day'));
+            cell.classList.add('selected-day');
+            selectedDay = iso;
+            step4.classList.remove('hidden');
+          });
+        }
+      }
+    }
+
+    // 4) Buchungsformular
+    bookingForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(bookingForm));
+      data.trade = selectedTrade;
+      data.area = areaInput.value;
+      data.pricing = document.querySelector('input[name="pricing"]:checked').value;
+      data.date = selectedDay;
+      data.price = data.pricing === 'fix' ? (parseFloat(areaInput.value) * selectedPricePerM2).toFixed(2) : 'Aufwand';
+      // Hier später: Fetch POST an Backend / E-Mail versenden
+      alert(`Vielen Dank!\n\nÜbersicht:\n${JSON.stringify(data, null, 2)}\n\n(Im Produktivbetrieb wird diese Buchung an das Backend gesendet.)`);
+      bookingForm.reset();
+    });
+
+    // Footer Jahr
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
